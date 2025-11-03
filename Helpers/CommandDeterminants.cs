@@ -67,16 +67,40 @@ namespace Disassembler.Helpers
             { "3F", "SREG" }
         };
 
-        private static readonly List<string> СommandsNeededInTwosComplement = new() { "rjmp", "breq", "brne" };
-        private static readonly List<string> СommandsForRegister = new() { "breq" };
-        private static readonly List<string> CommandsForHighRegister = new() { "subi", "sbci" };
-        private static readonly List<string> CommandsForBoth16Registers = new()
+        private static readonly List<string> СommandsNeededInTwosComplement = new()
         {
+            "rjmp", "breq", "brne",
+            "brpl", "brmi", "brvc", "brvs", "brge", "brlt", "brhc", "brhs",
+            "brtc", "brts", "brid", "brie", "brcc", "brcs", "brsh", "brlo",
+            "rcall"
         };
-        private static readonly List<string> CommandsForBothRegisters = new() { "eor" };
-        private static readonly List<string> CommandsNeededInHexData = new() { "jmp", "call" };
-        private static readonly List<string> CommandsForRegisterAsData = new() { "out" };
-        private static readonly List<string> CommandsForReservedRegisters = new() { "sbi", "sbic", "cbi" };
+
+        private static readonly List<string> СommandsForRegister = new()
+        {
+            "sbr", "cbr"
+        };
+
+        private static readonly List<string> CommandsForBothRegisters = new() {
+            "eor",
+            "add", "adc", "sub", "sbc", "and", "or", "mov", "cpse", "cp", "cpc", "movw",
+            "com", "neg", "inc", "dec", "tst", "clr", "ser", "lsl", "lsr", "rol", "ror", "asr", "swap",
+            "push", "pop"
+        };
+        private static readonly List<string> CommandsForHighRegister = new() 
+        { 
+            "subi", "sbci" 
+        };
+        private static readonly List<string> CommandsNeededInHexData = new() {
+            "jmp", "call"
+        };
+
+        private static readonly List<string> CommandsForRegisterAsData = new() {
+            "out"
+        };
+
+        private static readonly List<string> CommandsForReservedRegisters = new() {
+            "sbi", "sbic", "cbi", "sbis"
+        };
 
         private static readonly List<DetailedAsmCommand> _detailedAsmCommands = new()
         {
@@ -136,9 +160,6 @@ namespace Disassembler.Helpers
             else if ( СommandsForRegister.Contains( command ) )
                 return typeof( RegisterArgumentBuilder ).Name;
 
-            else if ( CommandsForBoth16Registers.Contains( command ) )
-                return typeof( Both16RegistersArgumentBuilder ).Name;
-
             else if ( CommandsForBothRegisters.Contains( command ) )
                 return typeof( BothRegistersArgumentBuilder ).Name;
 
@@ -157,8 +178,8 @@ namespace Disassembler.Helpers
             else if ( LdiCommand.StartsWith( command ) )
                 return typeof( LdiArgumentBuilder ).Name;
 
-            else if ( CommandsForHighRegister.Contains( command ) )
-                return typeof( HighRegisterArgumentBuilder ).Name;
+            else if (CommandsForHighRegister.Contains(command))
+                return typeof(HighRegisterArgumentBuilder).Name;
 
             else return typeof( DefaultArgumentBuilder ).Name;
         }

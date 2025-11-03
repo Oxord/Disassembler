@@ -27,7 +27,6 @@ namespace Disassembler.Helpers
         {
             { typeof( TwosComplementArgumentBuilder ).Name, new TwosComplementArgumentBuilder() },
             { typeof( RegisterArgumentBuilder ).Name, new RegisterArgumentBuilder() },
-            { typeof( Both16RegistersArgumentBuilder ).Name, new Both16RegistersArgumentBuilder() },
             { typeof( BothRegistersArgumentBuilder ).Name, new BothRegistersArgumentBuilder() },
             { typeof( HexDataArgumentBuilder ).Name, new HexDataArgumentBuilder() },
             { typeof( RegisterAsDataArgumentBuilder ).Name, new RegisterAsDataArgumentBuilder() },
